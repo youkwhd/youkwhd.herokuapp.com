@@ -9,4 +9,4 @@ def posts():
 @blueprints["posts"].route("/posts/<slug>/")
 def post(slug):
     post = _posts.get_or_404(slug)
-    return render_template("posts/post.html", post=post)
+    return render_template("posts/slug.html", post=post)
