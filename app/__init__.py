@@ -5,6 +5,10 @@ def create_app():
 
     register_blueprints(app)
 
+    @app.errorhandler(404)
+    def not_found(_):
+        return render_template("404.html"), 404
+
     return app
 
 def register_blueprints(app):
