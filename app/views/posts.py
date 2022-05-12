@@ -19,7 +19,7 @@ def post(slug):
     # generate & append heading tag
     for heading_tag in soup.find_all(re.compile('^h[1-6]$')):
         # replace all non-alphanumeric characters
-        heading_tag_id = re.sub(r'[\W]+', '-', heading_tag.string)
+        heading_tag_id = re.sub(r'[\W]+', '-', heading_tag.string).lower()
 
         while heading_tag_id[-1] == "-":
                 heading_tag_id = heading_tag_id[0:len(heading_tag_id) - 1]
