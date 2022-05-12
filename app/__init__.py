@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask_flatpages import FlatPages
 
+# all the posts from _posts directory
 posts = FlatPages()
 
 def create_app():
