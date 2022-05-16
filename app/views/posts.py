@@ -77,11 +77,6 @@ def post(slug):
                 if not is_root:
                     li_to_be_nested = root_ul.find_all(class_=str(heading_tag_number_now - 1))
 
-                    if heading_tag_number_before == root_li_name:
-                        temp_ul_tag.append(temp_li_tag)
-                        root_li.append(temp_ul_tag)
-                        continue
-
                     if heading_tag_number_now != heading_tag_number_before:
                         init_ul = False
 
@@ -93,6 +88,10 @@ def post(slug):
                         init_ul = True
                     else:
                         nested_ul.append(temp_li_tag)
+
+                    if heading_tag_number_before == root_li_name:
+                        temp_ul_tag.append(temp_li_tag)
+                        root_li.append(temp_ul_tag)
 
             # clean up temp classes
             for tag in root_ul.find_all():
