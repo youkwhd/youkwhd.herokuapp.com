@@ -69,11 +69,18 @@ def post(slug):
                 temp_ul_tag = soup.new_tag("ul")
 
                 if is_root:
+                    root_li = temp_li_tag
                     root_ul.append(temp_li_tag)
 
                 # nest to h1 or h2
+                # lol 
                 if not is_root:
                     li_to_be_nested = root_ul.find_all(class_=str(heading_tag_number_now - 1))
+
+                    if heading_tag_number_before == root_li_name:
+                        temp_ul_tag.append(temp_li_tag)
+                        root_li.append(temp_ul_tag)
+                        continue
 
                     if heading_tag_number_now != heading_tag_number_before:
                         init_ul = False
