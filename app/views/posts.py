@@ -5,6 +5,10 @@ from flask import render_template
 from bs4 import BeautifulSoup, Comment
 import re
 
+from pygments import highlight
+from pygments import lexers
+from pygments.formatters.html import HtmlFormatter
+
 @blueprints["posts"].route("/posts/")
 def posts():
     return render_template("posts/index.html", posts=_posts)
@@ -102,6 +106,28 @@ def post(slug):
 
             # delete the comment
             c.extract()
+
+
+    # code highlighter
+    codes = soup.find_all("code")
+    code_formatter = HtmlFormatter()
+
+    for code_tag in codes:
+        language = ""
+
+        for char in code_tag.string:
+            if (char == "\n"):
+                break
+
+            language += char
+
+        if not "\n" in code_tag.string:
+            continue
+
+        code_lexer = lexers.get_lexer_by_name("python")
+        highlighted_code = highlight(code_tag.string[len(language):len(code_tag.string)], code_lexer, code_formatter)
+        highlighted_code = BeautifulSoup(highlighted_code, 'html.parser')
+        code_tag.parent.replace_with(highlighted_code.pre)
 
     post.html = str(soup)
     return render_template("posts/slug.html", post=post)
