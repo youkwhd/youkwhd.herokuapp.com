@@ -115,14 +115,15 @@ def post(slug):
     for code_tag in codes:
         language = ""
 
+        # current code_tag is a one line <code />
+        if not "\n" in code_tag.string:
+            continue
+
         for char in code_tag.string:
             if (char == "\n"):
                 break
 
             language += char
-
-        if not "\n" in code_tag.string:
-            continue
 
         code_lexer = lexers.get_lexer_by_name("python")
         highlighted_code = highlight(code_tag.string[len(language):len(code_tag.string)], code_lexer, code_formatter)
