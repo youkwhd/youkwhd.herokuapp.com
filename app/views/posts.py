@@ -84,7 +84,7 @@ def post(slug):
                     li_to_be_nested = root_ul.find_all(class_=str(heading_tag_number_now - 1))
 
                     # TODO: update this check
-                    if len(li_to_be_nested) <= 0 or heading_tag_number_now - 1 > heading_tag_number_before:
+                    if heading_tag_number_now - 1 > heading_tag_number_before:
                         raise Exception("check your headings proportion for " + str(heading_tags[i]))
 
                     # open a new ul to be nested
