@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-	{{ post["metadata"]["title"][0] }}
+	{{ post["metadata"]["title"][0].lower() }}
 {% endblock %}
 
 {% block content %}
