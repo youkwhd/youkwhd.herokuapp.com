@@ -2,6 +2,11 @@ main {
 	margin: 30px 20px;
 }
 
+.home-wrapper {
+	max-width: 560px;
+	margin: 0 auto;
+}
+
 .content-wrapper {
 	display: flex;
 	flex-direction: row;
