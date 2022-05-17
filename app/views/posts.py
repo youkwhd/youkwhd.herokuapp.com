@@ -9,7 +9,7 @@ post_dir = Path(__file__).parent.parent / "_posts"
 
 @blueprints["posts"].route("/posts/")
 def posts():
-    markdown_files = [x for x in post_dir.glob("**/*") if x.is_file()]
+    markdown_files = [x for x in post_dir.glob("**/*") if x.is_file() and x.suffix == ".md"]
     posts = []
 
     for file in markdown_files:
