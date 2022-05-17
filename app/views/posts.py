@@ -5,15 +5,14 @@ from bs4 import BeautifulSoup
 from pathlib import Path
 import markdown
 
-base_path = Path(__file__).parent
+post_dir = Path(__file__).parent.parent / "_posts"
 
 @blueprints["posts"].route("/posts/")
 def posts():
-    dir =  (base_path / "../_posts").resolve()
-    files = [x for x in dir.glob("**/*") if x.is_file()]
+    markdown_files = [x for x in post_dir.glob("**/*") if x.is_file()]
     posts = []
 
-    for file in files:
+    for file in markdown_files:
         with open(file) as f:
             content = f.read()
             md_converter = markdown.Markdown(extensions=["meta"])
@@ -30,7 +29,7 @@ def posts():
 
 @blueprints["posts"].route("/posts/<slug>/")
 def post(slug):
-    file_path = (base_path / f"../_posts/{slug}.md").resolve()
+    file_path = post_dir / f"{slug}.md"
 
     with open(file_path) as f:
         content = f.read()
