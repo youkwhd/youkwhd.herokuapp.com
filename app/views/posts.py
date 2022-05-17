@@ -55,8 +55,7 @@ def post(slug):
             root_ul.append(root_li)
 
             nested_ul = root_ul
-
-            init_ul = False
+            init_ul = True
             for i in range(1, len(heading_tags)):
                 heading_tag_number_now = int(heading_tags[i].name[1:len(heading_tags[i].name)])
                 heading_tag_number_before = int(heading_tags[i - 1].name[1:len(heading_tags[i - 1].name)])
@@ -73,29 +72,33 @@ def post(slug):
                 temp_ul_tag = soup.new_tag("ul")
 
                 if is_root:
+                    # clean up classes
+                    for tag in root_ul.find_all():
+                        del tag["class"]
+
+                    # point to a new root
                     root_li = temp_li_tag
                     root_ul.append(temp_li_tag)
 
-                # nest to h1 or h2
-                # lol 
+                # nest to root (h1 or h2)
                 if not is_root:
                     li_to_be_nested = root_ul.find_all(class_=str(heading_tag_number_now - 1))
 
+                    if len(li_to_be_nested) <= 0:
+                        raise Exception("check your headings proportion for " + str(heading_tags[i]))
+
                     if heading_tag_number_now != heading_tag_number_before:
-                        init_ul = False
+                        init_ul = True
 
                     if not init_ul:
+                        nested_ul.append(temp_li_tag)
+
+                    if init_ul:
                         li_to_be_nested[-1].append(temp_ul_tag)
                         temp_ul_tag.append(temp_li_tag)
                         nested_ul = temp_ul_tag
 
-                        init_ul = True
-                    else:
-                        nested_ul.append(temp_li_tag)
-
-                    if heading_tag_number_before == root_li_name:
-                        temp_ul_tag.append(temp_li_tag)
-                        root_li.append(temp_ul_tag)
+                        init_ul = False
 
             # clean up temp classes
             for tag in root_ul.find_all():
