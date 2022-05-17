@@ -4,6 +4,16 @@
 {% endblock %}
 
 {% block content %}
-	<h1>{{ post["metadata"]["title"][0] }}</h1>
-	{{ post["html"] |safe }}
+	<div class="content-wrapper">
+		<div class="content">
+			<h1>{{ post["metadata"]["title"][0] }}</h1>
+			{{ post["html"] | safe }}
+		</div>
+		<nav>
+			<p><small>Article was posted on <br /> {{ post["metadata"]["date"][0] }}</small></p>
+			
+			<h3>External Links</h3>
+			<a href="https://github.com/youkwhd" target="_blank" rel="noopener noreferrer"><small>GitHub</small></a>
+		</nav>
+	</div>
 {% endblock %}
