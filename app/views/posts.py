@@ -1,6 +1,7 @@
 from . import blueprints
 from flask import render_template
 
+from datetime import datetime
 from bs4 import BeautifulSoup
 from pathlib import Path
 import markdown
@@ -24,6 +25,7 @@ def posts():
             }
 
             posts.append(post)
+            posts.sort(key=lambda post: datetime.strptime(post["metadata"]["date"][0], "%d %b %Y"), reverse=True)
 
     return render_template("posts/index.html", posts=posts)
 
