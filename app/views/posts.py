@@ -55,7 +55,6 @@ def post(slug):
             root_ul.append(root_li)
 
             nested_ul = root_ul
-            init_ul = True
             for i in range(1, len(heading_tags)):
                 heading_tag_number_now = int(heading_tags[i].name[1:len(heading_tags[i].name)])
                 heading_tag_number_before = int(heading_tags[i - 1].name[1:len(heading_tags[i - 1].name)])
@@ -87,18 +86,15 @@ def post(slug):
                     if len(li_to_be_nested) <= 0:
                         raise Exception("check your headings proportion for " + str(heading_tags[i]))
 
+                    # open a new ul to be nested
                     if heading_tag_number_now != heading_tag_number_before:
-                        init_ul = True
-
-                    if not init_ul:
-                        nested_ul.append(temp_li_tag)
-
-                    if init_ul:
                         li_to_be_nested[-1].append(temp_ul_tag)
                         temp_ul_tag.append(temp_li_tag)
                         nested_ul = temp_ul_tag
 
-                        init_ul = False
+                    # nest relative to the opened ul
+                    if heading_tag_number_now == heading_tag_number_before:
+                        nested_ul.append(temp_li_tag)
 
             # clean up temp classes
             for tag in root_ul.find_all():
