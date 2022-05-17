@@ -4,7 +4,7 @@
 {% block content %}
 	<ul>
 		{% for post in posts %}
-			<li><a href="/posts/{{ post.path }}">{{ post.meta.title }}</a></li>
+			<li><a href="/posts/{{ post["filename"] }}">{{ post["metadata"]["title"][0] }}</a></li>
 		{% endfor %}
 	</ul>
 {% endblock %}

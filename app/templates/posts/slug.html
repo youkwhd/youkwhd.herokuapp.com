@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}
-	{{ post.meta.title.lower() }}
+	{{ post["metadata"]["title"][0] }}
 {% endblock %}
 
 {% block content %}
-	<h1>{{ post.meta.title }}</h1>
-	{{ post.html|safe }}
+	<h1>{{ post["metadata"]["title"][0] }}</h1>
+	{{ post["html"] |safe }}
 {% endblock %}
