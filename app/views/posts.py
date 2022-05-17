@@ -124,7 +124,7 @@ def post(slug):
 
             language += char
 
-        code_lexer = lexers.get_lexer_by_name("python")
+        code_lexer = lexers.get_lexer_by_name(language)
         highlighted_code = highlight(code_tag.string[len(language):len(code_tag.string)], code_lexer, code_formatter)
         highlighted_code = BeautifulSoup(highlighted_code, 'html.parser')
         code_tag.parent.replace_with(highlighted_code.pre)
