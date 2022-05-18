@@ -7,21 +7,24 @@ main {
 	margin: 40px auto;
 }
 
-.content-wrapper {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-}
+/* if desktop */
+@media only screen and (min-width: 570px) {
+	.content-wrapper {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
 
-.content-wrapper > .content {
-	padding-right: 25px;
-	max-width: 80%;
-}
+	.content-wrapper > .content {
+		padding-right: 25px;
+		max-width: 80%;
+	}
 
-.content-wrapper > nav {
-	padding-right: 20px;
-}
+	.content-wrapper > nav {
+		padding-right: 20px;
+	}
 
-nav > h3 {
-	margin: 0 0 10px 0;
+	nav > h3 {
+		margin: 0 0 10px 0;
+	}
 }
