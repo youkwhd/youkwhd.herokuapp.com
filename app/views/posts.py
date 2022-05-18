@@ -1,5 +1,5 @@
 from . import blueprints
-from flask import render_template
+from flask import render_template, abort
 
 from datetime import datetime
 from bs4 import BeautifulSoup
@@ -33,27 +33,30 @@ def posts():
 def post(slug):
     file_path = post_dir / f"{slug}.md"
 
-    with open(file_path) as f:
-        content = f.read()
-        md_converter = markdown.Markdown(extensions=["toc", "codehilite", "meta"])
-        html = md_converter.convert(content)
-        
-        html_parser = BeautifulSoup(html, "html.parser")
-        toc_tag = html_parser.find("div", class_="toc")
+    try:
+        with open(file_path) as f:
+            content = f.read()
+            md_converter = markdown.Markdown(extensions=["toc", "codehilite", "meta"])
+            html = md_converter.convert(content)
+            
+            html_parser = BeautifulSoup(html, "html.parser")
+            toc_tag = html_parser.find("div", class_="toc")
 
-        # if there is "Table of contents"
-        if toc_tag != None:
-            # append "Table of contents" heading tag, remove div.toc wrapper
-            h2 = html_parser.new_tag("h2")
-            h2.string = "Table of contents"
-            toc_tag.insert_before(h2)
-            toc_tag.unwrap()
+            # if there is "Table of contents"
+            if toc_tag != None:
+                # append "Table of contents" heading tag, remove div.toc wrapper
+                h2 = html_parser.new_tag("h2")
+                h2.string = "Table of contents"
+                toc_tag.insert_before(h2)
+                toc_tag.unwrap()
 
-        html = str(html_parser)
+            html = str(html_parser)
 
-    post = {
-        "html": html,
-        "metadata": md_converter.Meta
-    }
+        post = {
+            "html": html,
+            "metadata": md_converter.Meta
+        }
 
-    return render_template("posts/slug.html", post=post)
+        return render_template("posts/slug.html", post=post)
+    except IOError:
+        abort(404)
