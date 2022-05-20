@@ -2,6 +2,10 @@ main {
 	margin: 30px 20px;
 }
 
+pre {
+	overflow: auto;
+}
+
 .home-wrapper {
 	max-width: 560px;
 	margin: 40px auto;
