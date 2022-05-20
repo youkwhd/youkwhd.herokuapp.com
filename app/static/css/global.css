@@ -3,7 +3,7 @@ main {
 }
 
 pre {
-	overflow: auto;
+	overflow-x: auto;
 }
 
 .home-wrapper {
