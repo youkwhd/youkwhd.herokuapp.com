@@ -4,10 +4,7 @@ def create_app():
     app = Flask(__name__)
 
     register_blueprints(app)
-
-    @app.errorhandler(404)
-    def not_found(_):
-        return render_template("404.html"), 404
+    register_errors(app)
 
     return app
 
@@ -16,3 +13,8 @@ def register_blueprints(app):
 
     for blueprint in blueprints.values():
         app.register_blueprint(blueprint)
+
+def register_errors(app):
+    @app.errorhandler(404)
+    def not_found(err):
+        return render_template("404.html"), 404
